@@ -1,4 +1,4 @@
 # HeilmittelFinder
 
 Eine kleine Spielerei, die man sicher noch tütig ausbauen kann. Man gibt ein "Problem" ein und erhält einen Heilstein und eine Heilpflanze ausgegeben.
-Habe mich entschieden, um das Projekt zu vergrößern die Möglichkeit zu geben mehr als ein Problem einzugeben. Außerdem ist eine Unterteilung in verschiedene Themen vielleicht eine gute Idee. Zudem muss natürlich die Datenbank erweitert werden.
+Habe mich entschieden, um das Projekt zu vergrößern die Möglichkeit zu geben mehr als ein Problem einzugeben. Außerdem ist eine Unterteilung in verschiedene Themen vielleicht eine gute Idee. Zudem muss natürlich die Datenbank erweitert werden.(Tag 1 und 2). Nun kann man ein Problem eingeben, wählt zwischen körperlich und emotional und gibt dann ein Symptom ein. Die Medizin die angezeigt wird gibt einen Heilstein, eine Heilpflanze und ein Ätherisches Öl an (Tag3). Die Schleife fragt solange ob man noch ein Problem hat, bis man "nein" eingibt.
