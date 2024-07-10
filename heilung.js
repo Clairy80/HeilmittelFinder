@@ -1,3 +1,5 @@
+
+
 const heilmittel = {
     emotional: {
         stress: { 
@@ -106,6 +108,15 @@ const heilmittel = {
     }
 };
 
+const chalk = require('chalk');
+console.log(chalk.yellow(`Für ${problem} empfehle ich den Heilstein `) +
+            chalk.bgGray.green(`${medizin.stein}`) +
+            chalk.yellow(`, die Heilpflanze `) +
+            chalk.bgGray.green(`${medizin.pflanze}`) +
+            chalk.yellow(` und das Ätherische Öl `) +
+            chalk.bgGray.green(`${medizin.öl}`) +
+            chalk.yellow('.'));
+
 function normalizeInput(input) {
     return input
         .toLowerCase()
@@ -114,6 +125,7 @@ function normalizeInput(input) {
         .replace(/ü/g, 'ue')
         .replace(/ß/g, 'ss');
 }
+
 
 function getMedizin(art, problem) {
     const kategorie = heilmittel[normalizeInput(art)];
@@ -127,14 +139,15 @@ const rl = readline.createInterface({
     output: process.stdout
 });
 
+
 function promptUser() {
     rl.question('Ist dein Problem körperlich oder emotional? ', (art) => {
         rl.question('Welches Problem hast du? ', (problem) => {
             const medizin = getMedizin(art, problem);
             if (medizin) {
-                console.log(`Für ${problem} empfehle ich den Heilstein ${medizin.stein}, die Heilpflanze ${medizin.pflanze} und das Ätherische Öl ${medizin.öl}.`);
+                console.log(chalk.green(`Für ${problem} empfehle ich den Heilstein ${medizin.stein}, die Heilpflanze ${medizin.pflanze} und das Ätherische Öl ${medizin.öl}.`));
             } else {
-                console.log('Für dieses Problem habe ich leider keinen Vorschlag.');
+                console.log(chalk.red('Für dieses Problem habe ich leider keinen Vorschlag.'));
             }
             rl.question('Möchtest du ein weiteres Problem eingeben (ja/nein)? ', (antwort) => {
                 if (normalizeInput(antwort) === 'ja') {
@@ -148,3 +161,4 @@ function promptUser() {
 }
 
 promptUser();
+
