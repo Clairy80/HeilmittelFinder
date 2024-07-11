@@ -1,151 +1,89 @@
+const chalk = require('chalk');
+const readline = require('readline');
 
-
+// Beispiel Heilmittel-Daten
 const heilmittel = {
     emotional: {
         stress: { 
             stein: 'Amethyst', 
             pflanze: 'Lavendel', 
-            öl: 'Lavendelöl' 
+            öl: 'Lavendelöl',
+            beschreibung: 'Hilft bei der Stressbewältigung.',
+            anwendungshinweise: 'Ein paar Tropfen ätherisches Öl auf die Haut auftragen oder in die Raumluft verdampfen.'
         },
         angst: { 
             stein: 'Lepidolith', 
             pflanze: 'Kamille', 
-            öl: 'Bergamotteöl' 
+            öl: 'Bergamotteöl',
+            beschreibung: 'Lindert Angstgefühle und fördert Entspannung.',
+            anwendungshinweise: 'Einige Tropfen ätherisches Öl auf ein Taschentuch geben und einatmen.'
         },
         liebeskummer: { 
             stein: 'Rosenquarz', 
             pflanze: 'Herzgespann', 
-            öl: 'Rosenöl' 
+            öl: 'Rosenöl',
+            beschreibung: 'Lindert Liebeskummer und fördert emotionale Heilung.',
+            anwendungshinweise: 'Einige Tropfen ätherisches Öl auf die Haut auftragen oder in die Raumluft verdampfen.'
         },
-        depression: { 
-            stein: 'Schwarzer Onyx', 
-            pflanze: 'Johanniskraut', 
-            öl: 'Zitronenöl' 
-        },
-        wut: { 
-            stein: 'Howlith', 
-            pflanze: 'Baldrian', 
-            öl: 'Ylang-Ylang-Öl' 
-        },
-        nervosität: { 
-            stein: 'Fluorit', 
-            pflanze: 'Melisse', 
-            öl: 'Lavendelöl' 
-        },
-        trauer: { 
-            stein: 'Obsidian', 
-            pflanze: 'Schafgarbe', 
-            öl: 'Sandelholzöl' 
-        },
-        eifersucht: { 
-            stein: 'Peridot', 
-            pflanze: 'Basilikum', 
-            öl: 'Patchouliöl' 
-        }
+        // Weitere Emotionen ...
     },
-
     koerperlich: {
         kopfschmerzen: { 
             stein: 'Sodalith', 
             pflanze: 'Pfefferminze', 
-            öl: 'Pfefferminzöl' 
+            öl: 'Pfefferminzöl',
+            beschreibung: 'Lindert Kopfschmerzen und fördert die Durchblutung.',
+            anwendungshinweise: 'Ein paar Tropfen ätherisches Öl auf die Schläfen auftragen und sanft einmassieren.'
         },
         müdigkeit: { 
             stein: 'Citrin', 
             pflanze: 'Ginseng', 
-            öl: 'Zitronenöl' 
+            öl: 'Zitronenöl',
+            beschreibung: 'Belebt den Geist und erhöht die Energie.',
+            anwendungshinweise: 'Einige Tropfen ätherisches Öl in die Handflächen geben, verreiben und tief einatmen.'
         },
-        verdauungsbeschwerden: { 
-            stein: 'Malachit', 
-            pflanze: 'Ingwer', 
-            öl: 'Ingweröl' 
-        },
-        katergefühl: { 
-            stein: 'Amethyst', 
-            pflanze: 'Mariendistel', 
-            öl: 'Pfefferminzöl' 
-        },
-        stiche: { 
-            stein: 'Achat', 
-            pflanze: 'Aloe Vera', 
-            öl: 'Teebaumöl' 
-        },
-        schlaflosigkeit: { 
-            stein: 'Mondstein', 
-            pflanze: 'Lavendel', 
-            öl: 'Lavendelöl' 
-        },
-        erkältung: { 
-            stein: 'Aquamarin', 
-            pflanze: 'Eukalyptus', 
-            öl: 'Eukalyptusöl' 
-        },
-        muskelschmerzen: { 
-            stein: 'Hämatit', 
-            pflanze: 'Arnika', 
-            öl: 'Rosmarinöl' 
-        },
-        hautirritationen: { 
-            stein: 'Rhodonit', 
-            pflanze: 'Ringelblume', 
-            öl: 'Kamillenöl' 
-        },
-        rückenschmerzen: { 
-            stein: 'Tigerauge', 
-            pflanze: 'Teufelskralle', 
-            öl: 'Wintergrünöl' 
-        },
-        immunsystemStärken: { 
-            stein: 'Bernstein', 
-            pflanze: 'Echinacea', 
-            öl: 'Thymianöl' 
-        },
-        entzündungen: { 
-            stein: 'Jaspis', 
-            pflanze: 'Kurkuma', 
-            öl: 'Kurkumaöl' 
-        }
+        // Weitere körperliche Beschwerden ...
     }
 };
 
-const chalk = require('chalk');
-console.log(chalk.yellow(`Für ${problem} empfehle ich den Heilstein `) +
-            chalk.bgGray.green(`${medizin.stein}`) +
-            chalk.yellow(`, die Heilpflanze `) +
-            chalk.bgGray.green(`${medizin.pflanze}`) +
-            chalk.yellow(` und das Ätherische Öl `) +
-            chalk.bgGray.green(`${medizin.öl}`) +
-            chalk.yellow('.'));
-
+// Funktion zur Normalisierung von Benutzereingaben
 function normalizeInput(input) {
-    return input
-        .toLowerCase()
-        .replace(/ä/g, 'ae')
-        .replace(/ö/g, 'oe')
-        .replace(/ü/g, 'ue')
-        .replace(/ß/g, 'ss');
+    return input.toLowerCase().replace(/ä/g, 'ae').replace(/ö/g, 'oe').replace(/ü/g, 'ue').replace(/ß/g, 'ss').trim();
 }
 
-
-function getMedizin(art, problem) {
-    const kategorie = heilmittel[normalizeInput(art)];
-    return kategorie ? kategorie[normalizeInput(problem)] : null;
+// Funktion zur Anzeige der Heilmittel-Empfehlung
+function displayMedicineRecommendation(problem, medizin) {
+    console.log(chalk.yellow.bold(`Für ${problem} empfehle ich:`));
+    console.log(chalk.gray('==========================='));
+    
+    console.log(chalk.green('Heilstein:'));
+    console.log(`- ${medizin.stein}`);
+    
+    console.log(chalk.green('Heilpflanze:'));
+    console.log(`- ${medizin.pflanze}`);
+    
+    console.log(chalk.green('Ätherisches Öl:'));
+    console.log(`- ${medizin.öl}`);
+    
+    console.log(chalk.yellow.bold('Weitere Informationen'));
+    console.log(chalk.gray('---------------------------'));
+    console.log(chalk.yellow('Beschreibung:'));
+    console.log(`- ${medizin.beschreibung}`);
+    console.log(chalk.yellow('Anwendungshinweise:'));
+    console.log(`- ${medizin.anwendungshinweise}`);
+    
+    console.log(chalk.gray('==========================='));
+    console.log('\n');
 }
 
-const readline = require('readline');
-
-const rl = readline.createInterface({
-    input: process.stdin,
-    output: process.stdout
-});
-
-
+// Funktion zur Abfrage des Benutzers und Anzeige der Heilmittel-Empfehlung
 function promptUser() {
     rl.question('Ist dein Problem körperlich oder emotional? ', (art) => {
         rl.question('Welches Problem hast du? ', (problem) => {
-            const medizin = getMedizin(art, problem);
+            const kategorie = heilmittel[normalizeInput(art)];
+            const medizin = kategorie ? kategorie[normalizeInput(problem)] : null;
             if (medizin) {
-                console.log(chalk.green(`Für ${problem} empfehle ich den Heilstein ${medizin.stein}, die Heilpflanze ${medizin.pflanze} und das Ätherische Öl ${medizin.öl}.`));
+                displayMedicineRecommendation(problem, medizin);
             } else {
                 console.log(chalk.red('Für dieses Problem habe ich leider keinen Vorschlag.'));
             }
@@ -160,5 +98,9 @@ function promptUser() {
     });
 }
 
-promptUser();
+const rl = readline.createInterface({
+    input: process.stdin,
+    output: process.stdout
+});
 
+promptUser();
